@@ -46,7 +46,7 @@
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
   },
-  "proxy": "http://localhost:3300",
+
   "browserslist": {
     "production": [
       ">0.2%",
