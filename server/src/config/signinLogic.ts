@@ -3,9 +3,9 @@ import userModel from '../models/usermodel';
 
 
 //function to validate user sign in
-const validateLogin = async (username: string, password: string ) => {
+const validateLogin = async (email: string, password: string ) => {
     //check db for user
-    const userResp =  await userModel.findOne({ email: username })
+    const userResp =  await userModel.findOne({ email: email })
 
     //if user exists
     if (userResp){
@@ -13,12 +13,12 @@ const validateLogin = async (username: string, password: string ) => {
         const validatePassword = await comparePasswordWithHash(password, userResp.password);
 
         if(!validatePassword){
-            return ({ errMsg: 'Incorrect Password!' })
+            return ({ errMSGmessage: 'Incorrect Password!' })
         }else{
-           return({successMessage: 'Sign in successful', userId: userResp._id}) 
+           return({successMessage: 'Sign in successful', userId: userResp}) 
         }
     }else{
-        return ({ errMsg: 'No account found.' });
+        return ({ errMSGmessage: 'No account found.' });
     }
 }
 

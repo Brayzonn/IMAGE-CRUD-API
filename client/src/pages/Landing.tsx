@@ -25,19 +25,21 @@ const Landing = () => {
         }   
 
         const formData: FormData = new FormData();
-        formData.append('imageName', userID);
+        formData.append('imageName', 'ggh');
+    
         for (let i = 0; i < images.length; i++) {
           formData.append(`images`, images[i]);
         }
-        
+
         const formResponse = await axios.post('http://localhost:3300/api/uploadimages', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6eyJfaWQiOiI2NThiMmI3NDEzYmI5YTRhM2VjNGViZjkiLCJ1c2VybmFtZSI6ImdyZWciLCJlbWFpbCI6ImdyZWdAZ3JlZy5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRZbjNxVVhabEFjdkM1T1laQktKS3RlalpIQ0cwQ1ZJaEdFcmdoWXZuLmZhbGR4SzFhcG1CaSIsImRhdGUiOiIyMDIzLTEyLTI2VDE5OjM3OjI0LjgxNFoiLCJfX3YiOjB9LCJpYXQiOjE3MDM2Mjg2NDAsImV4cCI6MTcwNjIyMDY0MH0.D_XbdcLb5U0D8SFR14VK3UpsCEIMU4Xym5Sc7JMMrkk'
           },
         })
 
         if(formResponse.status){
-            console.log('success')
+            console.log(formResponse)
         }else{
             console.log('failed')
         }
