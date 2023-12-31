@@ -7,7 +7,7 @@ import  {ensureAuthenticated}  from '../config/authenticatedRoutes';
 
 
 router.get('/', (req: Request, res: Response , next: NextFunction)=>{
-    res.send('fuck off!!')
+    res.send('Welcome Human!!')
 })
 
 router.post('/signin', signIn)
