@@ -1,4 +1,4 @@
-# Express.js TypeScript CRUD API with Image Upload
+# Express.js TypeScript Image File CRUD API
 
 This project is an Express.js CRUD API built with TypeScript, allowing users to perform Create, Read, Update, and Delete operations. It handles multiple image uploads with user-based restrictions, implements signup and sign-in functionality, and utilizes token-based authentication for protected routes.
 
