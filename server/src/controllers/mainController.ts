@@ -111,7 +111,7 @@ const getImages = async (req: Request, res: Response , next: NextFunction) => {
         // Read files from the directory
         fs.readdir(imageDirectory, (err, files) => {
             if (err) {
-                console.error(err); // Log the specific error for debugging
+                console.error(err); 
                 return res.status(500).json({ success: false, message: 'Error reading directory' });
             }
 
@@ -176,16 +176,38 @@ const postImages = async (req: Request, res: Response , next: NextFunction) => {
         if (!req.files || req.files.length === 0) {
             return res.status(400).json({ success: false, message: 'No files uploaded' });
         }
-        upload.array('images', 4)(req, res, function (err: unknown) {
-            //check for errors
-            if (err instanceof MulterError) {
-                return res.status(400).json({ success: false, message: err });
-            } else if (typeof err === 'string') {
-                return res.status(400).json({ success: false, message: err });
-            } else {
-                return res.status(200).json({ success: true, message: 'Images uploaded successfully' });
+
+        //get user id from authRoute middleware
+        const user: string = req.userId || '';
+        const imageDirectory = path.resolve('src/imageuploads');
+
+        // Read files from the directory
+        fs.readdir(imageDirectory, (err, files) => {
+            if (err) {
+                console.error(err); 
+                return res.status(500).json({ success: false, message: 'Error reading directory' });
             }
-        });
+
+            // Find the image file by name
+            const imageFiles = files.filter((file) => file.startsWith(user));
+
+            //limit user to 10 photos max
+            if(imageFiles.length > 9){
+                return res.status(400).json({ success: false, message: 'Free storage used' });
+            }
+            //if photos length below 10, continue with upload
+            upload.array('images', 4)(req, res, function (err: unknown) {
+                //check for errors
+                if (err instanceof MulterError) {
+                    return res.status(400).json({ success: false, message: err });
+                } else if (typeof err === 'string') {
+                    return res.status(400).json({ success: false, message: err });
+                } else {
+                    return res.status(200).json({ success: true, message: 'Images uploaded successfully' });
+                }
+            });
+        })  
+
     } catch (error) {
         res.status(500).json({ success: false, message: 'Something went wrong, please try again later' });
     }
